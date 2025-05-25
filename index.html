@@ -5,8 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prison Management System</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Login Credentials Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .modal-header h2 {
+            margin: 0;
+            color: #333;
+        }
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #000;
+        }
+        .credentials {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #007bff;
+        }
+        .disclaimer {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+    </style>
 </head>
 <body>
+    <!-- Login Credentials Popup -->
+    <div id="loginCredsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login Information</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="credentials">
+                <p><strong>Default Login Credentials:</strong></p>
+                <p>Username: <strong>admin</strong></p>
+                <p>Password: <strong>pass</strong></p>
+            </div>
+            <div class="disclaimer">
+                <p><strong>Disclaimer:</strong> This is a demo version of the Prison Management System. The default credentials are provided for demonstration purposes only.</p>
+            </div>
+        </div>
+    </div>
+
     <div id="main-container">
         <!-- Front Page / Login Page -->
         <div id="front-page" class="page">
