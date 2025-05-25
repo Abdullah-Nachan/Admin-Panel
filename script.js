@@ -1684,14 +1684,52 @@ class Prison {
         // Show confirmation message
         const fileMessage = document.getElementById('file-message');
         fileMessage.innerHTML = 'All prisoner data has been cleared successfully';
+    }
+}
+
+// Function to show login credentials modal
+function showLoginCredsModal() {
+    const modal = document.getElementById('loginCredsModal');
+    const closeBtn = document.querySelector('.close');
+    
+    if (modal) {
+        modal.style.display = 'block';
         
-        // Stay on the same page to let user see the message
+        // Close the modal when the close button is clicked
+        if (closeBtn) {
+            closeBtn.onclick = function() {
+                modal.style.display = 'none';
+            };
+        }
+        
+        // Close the modal when clicking outside the modal content
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
     }
 }
 
 // Initialize the system when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM content loaded, initializing Prison Management System");
+    
+    // Initialize the prison system
     const prisonSystem = new Prison();
     console.log("Prison Management System initialized");
-}); 
+    
+    // Show login credentials modal when on login page
+    if (window.location.href.includes('login') || document.getElementById('login-page').style.display !== 'none') {
+        showLoginCredsModal();
+    }
+    
+    // Add event listener to Continue button to show modal after navigation
+    const continueBtn = document.getElementById('continue-btn');
+    if (continueBtn) {
+        continueBtn.addEventListener('click', function() {
+            // Show modal after a short delay to ensure page transition happens
+            setTimeout(showLoginCredsModal, 100);
+        });
+    }
+});
