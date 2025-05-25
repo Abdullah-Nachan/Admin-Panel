@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prison Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main-container">
+        <!-- Front Page / Login Page -->
+        <div id="front-page" class="page">
+            <div class="date-time">
+                <div id="date"></div>
+                <div id="time"></div>
+            </div>
+            <div class="header">
+                <h1>PRISON MANAGEMENT SYSTEM</h1>
+            </div>
+            <div class="subheader">
+                <p>Final Year Project </p>
+            </div>
+            <div id="loading-bar">
+                <div class="progress"></div>
+            </div>
+            <button id="continue-btn" class="btn">Continue</button>
+        </div>
+
+        <!-- Login Page -->
+        <div id="login-page" class="page" style="display: none;">
+            <div class="date-time">
+                <div id="login-date">Date: </div>
+                <div id="login-time"></div>
+            </div>
+            <div class="header">
+                <h1>PRISON MANAGEMENT SYSTEM</h1>
+            </div>
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" placeholder="Enter password">
+                </div>
+                <div id="login-attempts"></div>
+                <button id="login-btn" class="btn">Login</button>
+            </div>
+        </div>
+
+        <!-- Main Menu Page -->
+        <div id="main-menu" class="page" style="display: none;">
+            <div class="date-time">
+                <div id="menu-date">Date: </div>
+                <div id="menu-time"></div>
+            </div>
+            <div class="header">
+                <h1>PRISON STATION MANAGEMENT SYSTEM</h1>
+            </div>
+            <div class="menu-container">
+                <button class="menu-btn" id="new-prisoner">1) New prisoner entry</button>
+                <button class="menu-btn" id="prisoner-details">2) Prisoner details</button>
+                <button class="menu-btn" id="court-hearings">3) Court Hearing History</button>
+                <button class="menu-btn" id="edit-prisoner">4) Edit prisoner details</button>
+                <button class="menu-btn" id="release-prisoner">5) Release prisoner</button>
+                <button class="menu-btn" id="search-prisoner">6) Search prisoner</button>
+                <button class="menu-btn" id="prison-file">7) Prison File</button>
+                <button class="menu-btn" id="logout">8) Logout</button>
+                <button class="menu-btn" id="exit">9) Exit</button>
+            </div>
+        </div>
+
+        <!-- New Prisoner Entry Page -->
+        <div id="new-prisoner-page" class="page" style="display: none;">
+            <div class="date-time">
+                <div id="new-prisoner-date">Date: </div>
+                <div id="new-prisoner-time"></div>
+            </div>
+            <div class="header">
+                <h1>Enter basic information of prisoner</h1>
+            </div>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="first-name">First Name:</label>
+                    <input type="text" id="first-name">
+                </div>
+                <div class="form-group">
+                    <label for="second-name">Second Name:</label>
+                    <input type="text" id="second-name">
+                </div>
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="male" name="gender" value="Male">
+                        <label for="male">Male</label>
+                        <input type="radio" id="female" name="gender" value="Female">
+                        <label for="female">Female</label>
+                        <input type="radio" id="other" name="gender" value="Other">
+                        <label for="other">Other</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob">
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="height">Height:</label>
+                    <input type="number" id="height" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="eye-color">Eye Color:</label>
+                    <input type="text" id="eye-color">
+                </div>
+                <div class="form-group">
+                    <label for="crime">Crime:</label>
+                    <div class="crime-input-container">
+                        <input type="text" id="crime" autocomplete="off">
+                        <div class="crime-suggestions" id="crime-suggestions"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="punishment">Punishment (months):</label>
+                    <input type="number" id="punishment">
+                </div>
+                <div id="cell-info" class="cell-info"></div>
+                <button id="save-prisoner" class="btn">Save</button>
+                <button id="back-to-menu" class="btn">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- Prisoner Details Page -->
+        <div id="prisoner-details-page" class="page" style="display: none;">
+            <div class="date-time">
+                <div id="details-date">Date: </div>
+                <div id="details-time"></div>
+            </div>
+            <div class="header">
+                <h1>Prisoner List</h1>
+            </div>
+            <div class="table-container">
+                <table id="prisoners-table">
+                    <thead>
+                        <tr>
+                            <th>SR.</th>
+                            <th>NAME</th>
+                            <th>Cell Block</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Height</th>
+                            <th>Eye Color</th>
+                            <th>Crime</th>
+                            <th>Punishment</th>
+                            <th>Entry Date/Time</th>
+                            <th>Last Update Date/Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prisoners-list">
+                    </tbody>
+                </table>
+                <div id="no-prisoners" style="display: none;">No prisoners present</div>
+                <button id="details-back" class="btn">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- Court Hearings History Page -->
+        <div id="court-hearings-page" class="page" style="display: none;">
+            <div class="date-time">
+                <div id="hearings-date">Date: </div>
+                <div id="hearings-time"></div>
+            </div>
+            <div class="header">
+                <h1>Court Hearing History</h1>
+            </div>
+            <div class="table-container">
+                <table id="hearings-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>Cell Block</th>
+                            <th>Crime</th>
+                            <th>Previous Hearings</th>
+                            <th>Upcoming Hearings</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hearings-list">
+                    </tbody>
+                </table>
+                <div id="no-hearings-prisoners" style="display: none;">No prisoners present</div>
+                <div class="hearings-form" id="hearings-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="hearing-cell-block">Enter cell block:</label>
+                        <input type="number" id="hearing-cell-block">
+                    </div>
+                    <button id="load-hearing-history" class="btn">Load Hearing History</button>
+                </div>
+                
+                <div id="hearing-details" style="display: none;">
+                    <h2>Hearing Details for <span id="hearing-prisoner-name"></span></h2>
+                    
+                    <div class="hearing-history">
+                        <h3>Previous Hearings</h3>
+                        <ul id="previous-hearings-list"></ul>
+                    </div>
+                    
+                    <div class="hearing-schedule">
+                        <h3>Upcoming Hearings</h3>
+                        <ul id="upcoming-hearings-list"></ul>
+                    </div>
+                    
+                    <div class="add-hearing-form">
+                        <h3>Add New Hearing</h3>
+                        <div class="form-group">
+                            <label for="hearing-date">Hearing Date:</label>
+                            <input type="date" id="hearing-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="hearing-time">Hearing Time:</label>
+                            <input type="time" id="hearing-time">
+                        </div>
+                        <div class="form-group">
+                            <label for="hearing-type">Hearing Type:</label>
+                            <select id="hearing-type">
+                                <option value="Initial Appearance">Initial Appearance</option>
+                                <option value="Arraignment">Arraignment</option>
+                                <option value="Preliminary Hearing">Preliminary Hearing</option>
+                                <option value="Pre-Trial Conference">Pre-Trial Conference</option>
+                                <option value="Trial">Trial</option>
+                                <option value="Sentencing">Sentencing</option>
+                                <option value="Appeal Hearing">Appeal Hearing</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hearing-notes">Notes:</label>
+                            <textarea id="hearing-notes" rows="3"></textarea>
+                        </div>
+                        <button id="add-hearing" class="btn">Add Hearing</button>
+                    </div>
+                </div>
+                
+                <div id="hearing-result" class="hearing-result"></div>
+                <button id="hearings-back" class="btn">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- Edit Prisoner Page -->
+        <div id="edit-prisoner-page" class="page" style="display: none;">
+            <div class="date-time">
+                <div id="edit-date">Date: </div>
+                <div id="edit-time"></div>
+            </div>
+            <div class="header">
+                <h1>Edit Prisoner Details</h1>
+            </div>
+            <div class="edit-container">
+                <div class="edit-selection">
+                    <div class="form-group">
+                        <label for="edit-cell-block">Enter cell block to edit:</label>
+                        <input type="number" id="edit-cell-block">
+                    </div>
+                    <button id="load-prisoner" class="btn">Load Prisoner Data</button>
+                </div>
+                
+                <div id="edit-form-container" class="form-container" style="display: none;">
+                    <div class="form-group">
+                        <label for="edit-first-name">First Name:</label>
+                        <input type="text" id="edit-first-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-second-name">Second Name:</label>
+                        <input type="text" id="edit-second-name">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <div class="radio-group">
+                            <input type="radio" id="edit-male" name="edit-gender" value="Male">
+                            <label for="edit-male">Male</label>
+                            <input type="radio" id="edit-female" name="edit-gender" value="Female">
+                            <label for="edit-female">Female</label>
+                            <input type="radio" id="edit-other" name="edit-gender" value="Other">
+                            <label for="edit-other">Other</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-dob">Date of Birth:</label>
+                        <input type="date" id="edit-dob">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-age">Age:</label>
+                        <input type="number" id="edit-age" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-height">Height:</label>
+                        <input type="number" id="edit-height" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-eye-color">Eye Color:</label>
+                        <input type="text" id="edit-eye-color">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-crime">Crime:</label>
+                        <div class="crime-input-container">
+                            <input type="text" id="edit-crime" autocomplete="off">
+                            <div class="crime-suggestions" id="edit-crime-suggestions"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-punishment">Punishment (months):</label>
+                        <input type="number" id="edit-punishment">
+                    </div>
+                    <div id="edit-cell-info" class="cell-info"></div>
+                    <button id="update-prisoner" class="btn">Update Prisoner</button>
+                </div>
+                
+                <div id="edit-message" class="edit-message"></div>
+                <div id="no-prisoner-to-edit" style="display: none;">No prisoner found in the specified cell block.</div>
+                <button id="edit-back" class="btn">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- Release Prisoner Page -->
+        <div id="release-page" class="page" style="display: none;">
+            <div class="date-time">
+                <div id="release-date">Date: </div>
+                <div id="release-time"></div>
+            </div>
+            <div class="header">
+                <h1>Release prisoner</h1>
+            </div>
+            <div class="table-container">
+                <table id="release-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>Cell Block</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Height</th>
+                            <th>Eye Color</th>
+                            <th>Crime</th>
+                            <th>Punishment</th>
+                        </tr>
+                    </thead>
+                    <tbody id="release-list">
+                    </tbody>
+                </table>
+                <div id="no-release-prisoners" style="display: none;">No prisoners present</div>
+                <div class="release-form" id="release-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="release-cell-block">Enter cell block:</label>
+                        <input type="number" id="release-cell-block">
+                    </div>
+                    <button id="check-release" class="btn">Check Status</button>
+                </div>
+                <div id="release-status" class="release-status"></div>
+                <button id="confirm-release" class="btn" style="display: none;">Confirm Release</button>
+                <button id="release-back" class="btn">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- Search Prisoner Page -->
+        <div id="search-page" class="page" style="display: none;">
+            <div class="date-time">
+                <div id="search-date">Date: </div>
+                <div id="search-time"></div>
+            </div>
+            <div class="header">
+                <h1>Search Menu</h1>
+            </div>
+            <div class="search-container">
+                <div class="form-group">
+                    <label for="search-cell">Enter cell block ID:</label>
+                    <input type="number" id="search-cell">
+                </div>
+                <button id="search-btn" class="btn">Search</button>
+                <div class="search-results" id="search-results">
+                    <table id="search-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>NAME</th>
+                                <th>Cell Block</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Height</th>
+                                <th>Eye Color</th>
+                                <th>Crime</th>
+                                <th>Punishment</th>
+                                <th>Entry Date/Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="search-list">
+                        </tbody>
+                    </table>
+                </div>
+                <div id="search-message"></div>
+                <button id="search-back" class="btn">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- Prison File Page -->
+        <div id="file-page" class="page" style="display: none;">
+            <div class="date-time">
+                <div id="file-date">Date: </div>
+                <div id="file-time"></div>
+            </div>
+            <div class="header">
+                <h1>Prison File</h1>
+            </div>
+            <div class="file-container">
+                <div class="file-options">
+                    <h2>In which format you want to export your file?</h2>
+                    <button id="txt-file" class="btn">TXT File</button>
+                    <button id="html-file" class="btn">HTML File</button>
+                    <button id="doc-file" class="btn">Word File</button>
+                </div>
+                <div id="file-message" class="file-message"></div>
+                <div class="file-options storage-management">
+                    <h2>Data Management</h2>
+                    <p>Your data is automatically saved between sessions.</p>
+                    <button id="clear-storage" class="btn danger-btn">Clear All Data</button>
+                </div>
+                <button id="file-back" class="btn">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
